@@ -42,30 +42,29 @@ public class Sorting
             {
                 return -1;
             }*/
- 
+            
             for (int i = 0; i < split1.length; i++) 
             {
                 int numb1 = Integer.parseInt(split1[i]);
                 int numb2 = Integer.parseInt(split2[i]);
- 
                 
                 if (numb1 > numb2)
                 {
                     return 1;
                 }
- 
                 if (numb1 < numb2)
                 {
                     return -1;
                 }
-                if (split1.length < split2.length) 
-                {
-                    return -1;
-                }
-            
+
                 if (split1.length > split2.length) 
                 {
                     return 1;
+                }
+            
+                if (split1.length < split2.length) 
+                {
+                    return -1;
                 }
             }
             
