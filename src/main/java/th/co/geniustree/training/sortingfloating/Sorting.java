@@ -32,49 +32,46 @@ public class Sorting
     }
     
     private static int multiplePointCompare(String str1 , String str2)
-    {
-        try
-        {
-            String[] split1 = str1.split("\\.");
-            String[] split2 = str2.split("\\.");
-            
-            /*if (split1.length != split2.length) 
-            {
-                return -1;
-            }*/
-            
-            for (int i = 0; i < split1.length; i++) 
-            {
-                int numb1 = Integer.parseInt(split1[i]);
-                int numb2 = Integer.parseInt(split2[i]);
-                
-                if (numb1 > numb2)
-                {
-                    return 1;
-                }
-                if (numb1 < numb2)
-                {
-                    return -1;
-                }
-
-                if (split1.length > split2.length) 
-                {
-                    return 1;
-                }
-            
-                if (split1.length < split2.length) 
-                {
-                    return -1;
-                }
+    {// ทำการแยกตัวเลข  ออกจากจุด "." เช่น 3.1.2.4 --> {"3", "1", "2", "4"}
+        // สัญลักษณ์ \\. เป็น regular expression
+        String[] split1 = str1.split("\\."); 
+        String[] split2 = str2.split("\\.");
+ 
+        // เลือกหลักตัวเลขที่มีค่าสูงสุด เช่น 1.2 กับ 1.5.2.3
+        // ค่าที่ได้จะเป็น 4 
+        int length = (split1.length > split2.length) ? split1.length : split2.length;
+ 
+        // วน loop เปรียบเทียบค่าทีละหลัก 
+        for (int i = 0; i < length; i++) {
+            int numb1;
+            try {
+                // แปลง string ไปเป็นตัวเลขก่อน
+                numb1 = Integer.parseInt(split1[i]); 
+            } catch (Exception ex) {
+                // numb1 < numb2 
+                // ซึ่งอาจเกิดจากสาเหตุ numb1 มีจำนวนหลักตัวเลขน้อยกว่า numb2 
+                // แต่ตอน loop เรา loop ตาม จำนวนหลักของ numb2 (เกิด ArrayIndexOutOfBoundsException)
+                // หรือ numb1 มีรูปแบบตัวเลขที่ไม่ถูกต้อง  (NumberFormatException)
+                return -1; 
             }
-            
-            
-            return 0;
+ 
+            int numb2;
+            try {
+                numb2 = Integer.parseInt(split2[i]);
+            } catch (Exception ex) {
+                // คล้าย numb1 แต่อันนี้หมายความว่า numb1 > numb2
+                return 1; 
+            }
+ 
+            if (numb1 > numb2) {
+                return 1;
+            }
+ 
+            if (numb1 < numb2) {
+                return -1;
+            }
         }
-        catch (Exception ex) 
-        {
-            return -1;
-        }
-        
+ 
+        return 0; //numb1 เท่ากับ numb2
     }
 }
